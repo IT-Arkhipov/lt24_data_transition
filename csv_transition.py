@@ -79,4 +79,4 @@ for column in df.columns:
     if any(string in column for string in int_columns):
         df[column] = df[column].astype('int64')
 df = df.infer_objects(copy=False).fillna('')
-df.to_csv('sample_dataframe.csv')
+df.to_csv('converted_json.csv')
