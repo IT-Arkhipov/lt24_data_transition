@@ -1,3 +1,4 @@
+import sys
 import json
 import pandas as pd
 from warnings import simplefilter
@@ -44,10 +45,22 @@ def insert_df_value(data, _df, prefix=''):
     return _df
 
 
-with open('orders_3.json', 'r', encoding='utf-8') as file:
-    orders = json.load(file)
-
 simplefilter(action="ignore", category=pd.errors.PerformanceWarning)
+filename = 'orders_3.json'
+
+if sys.stdin.isatty():
+    if len(sys.argv) != 2:
+        print("Usage: python read_orders.py <filename>")
+        sys.exit(1)
+
+    filename = sys.argv[1]
+
+try:
+    with open(filename, 'r', encoding='utf-8') as file:
+        orders = json.load(file)
+except FileNotFoundError:
+    print(f"File '{filename}' not found.")
+
 
 df = pd.DataFrame()
 
