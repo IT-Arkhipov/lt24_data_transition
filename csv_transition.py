@@ -48,20 +48,21 @@ def insert_df_value(data, _df, prefix=''):
 
 
 simplefilter(action="ignore", category=pd.errors.PerformanceWarning)
-filename = 'orders_3.json'
+json_filename = 'orders_3.json'
+csv_filename = 'converted_json.csv'
 
 if sys.stdin.isatty():
     if len(sys.argv) != 2:
         print("Usage: python csv_transition.py <filename>")
         sys.exit(1)
 
-    filename = sys.argv[1]
+    json_filename = sys.argv[1]
 
 try:
-    with open(filename, 'r', encoding='utf-8') as file:
+    with open(json_filename, 'r', encoding='utf-8') as file:
         orders = json.load(file)
 except FileNotFoundError:
-    print(f"File '{filename}' not found.")
+    print(f"File '{json_filename}' not found.")
 
 
 df = pd.DataFrame()
@@ -79,4 +80,4 @@ for column in df.columns:
     if any(string in column for string in int_columns):
         df[column] = df[column].astype('int64')
 df = df.infer_objects(copy=False).fillna('')
-df.to_csv('converted_json.csv')
+df.to_csv(csv_filename)
