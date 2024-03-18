@@ -41,6 +41,8 @@ def insert_df_value(data, _df, prefix=''):
             else:
                 _df.loc[_df.index[-1], new_key] = ''
         else:
+            if isinstance(value, str):
+                value = value.replace('\n', '').replace(',', '')
             _df.loc[_df.index[-1], new_key] = value
     return _df
 
@@ -77,4 +79,4 @@ for column in df.columns:
     if any(string in column for string in int_columns):
         df[column] = df[column].astype('int64')
 df = df.infer_objects(copy=False).fillna('')
-df.to_csv('sample_dataframe.csv', sep=';')
+df.to_csv('sample_dataframe.csv')
