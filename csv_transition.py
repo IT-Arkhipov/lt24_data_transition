@@ -29,6 +29,7 @@ if not get_orders_date:
     get_orders_date = dataset.GET_ORDERS_DATES
 
 orders = get.orders(get_orders_date, get_orders_date)
+print(f"{len(orders)} to proceed")
 
 df = pd.DataFrame()
 
@@ -37,6 +38,8 @@ for order in orders:
     new_row = pd.DataFrame({}, index=[0])
     df = pd.concat([df, new_row], ignore_index=True)
     insert_df_value(order, df)
+    if order_count % 100 == 0:
+        print(f"{order_count // 100 * 100} orders passed")
     order_count += 1
 
 print(f">>> {order_count} orders converted! <<<")
