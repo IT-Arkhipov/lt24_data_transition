@@ -1,27 +1,14 @@
-import sys
-import json
 import pandas as pd
 from warnings import simplefilter
 
+from lib import dataset
+from lib.api import get
 from lib.utls import insert_df_value
 
 simplefilter(action="ignore", category=pd.errors.PerformanceWarning)
-json_filename = 'orders_3.json'
 csv_filename = 'converted_json.csv'
 
-if sys.stdin.isatty():
-    if len(sys.argv) != 2:
-        print("Usage: python csv_transition.py <filename>")
-        sys.exit(1)
-
-    json_filename = sys.argv[1]
-
-try:
-    with open(json_filename, 'r', encoding='utf-8') as file:
-        orders = json.load(file)
-except FileNotFoundError:
-    print(f"File '{json_filename}' not found.")
-
+orders = get.orders(*dataset.ALL_DATES)
 
 df = pd.DataFrame()
 
