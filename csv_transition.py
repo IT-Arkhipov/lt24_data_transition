@@ -38,7 +38,7 @@ for order in orders:
     new_row = pd.DataFrame({}, index=[0])
     df = pd.concat([df, new_row], ignore_index=True)
     insert_df_value(order, df)
-    if order_count % 100 == 0:
+    if order_count % 100 == 0 and order_count // 100 > 0:
         print(f"{order_count // 100 * 100} orders passed")
     order_count += 1
 

@@ -34,6 +34,6 @@ def insert_df_value(data, _df, prefix=''):
                 _df.loc[_df.index[-1], new_key] = ''
         else:
             if isinstance(value, str):
-                value = value.replace('\n', '').replace(',', '')
+                value = value.replace('\n', ' ').replace(',', ' ')
             _df.loc[_df.index[-1], new_key] = value
     return _df
